@@ -1,0 +1,43 @@
+ #!/bin/bash
+
+clear
+
+total=`cat cars.csv | wc -l`
+let total=$total-1
+i=2
+
+while [ $i -le $total ]
+do
+    #Amb "sort -k7 -t:" demanem ordenar la columna numero 7, sepadada per ":" de les altres columnes, de forma que poguem agafar la informacio necesaria de cada cotxe de forma ordenada
+    #La columna 7 es la que conte la informacio de l'accelecario de cada cotxe
+    #La comanda "sort -r" ordena a la inversa (de major a menos)
+    Cotxe=`sort -r -k7 -t: cars.csv | cut -d: -f1 | head -$i | tail +$i`
+    MPG=`sort -r -k7 -t: cars.csv | cut -d: -f2 | head -$i | tail +$i`
+    Num_Cilindres=`sort -r -k7 -t: cars.csv | cut -d: -f3 | head -$i | tail +$i`
+    Potencia=`sort -r -k7 -t: cars.csv | cut -d: -f5 | head -$i | tail +$i`
+    Cilindrada=`sort -r -k7 -t: cars.csv | cut -d: -f4 | head -$i | tail +$i`
+    Model=`sort -r -k7 -t: cars.csv | cut -d: -f8 | head -$i | tail +$i`
+    Pes=`sort -r -k7 -t: cars.csv | cut -d: -f6 | head -$i | tail +$i`
+    Origen=`sort -r -k7 -t: cars.csv | cut -d: -f9 | head -$i | tail +$i`
+    Acceleracio=`sort -r -k7 -t: cars.csv | cut -d: -f7 | head -$i | tail +$i`
+
+    #Filtre per que no es mostrin per pantalla les dos primeres linies del cars.csv, on hi ha el nom de cada columna i quin tipus de variable es
+    if [ "$Cotxe" != "Car" ]
+    then
+      if [ "$Cotxe" != "STRING" ]
+      then
+        if [ "$Cotxe" != "	" ]
+        then
+            	echo "Cotxe: $Cotxe"
+           	echo "MPG: $MPG 			NºCilindres: $Num_Cilindres 		Cilindrada: $Cilindrada"
+           	echo "Potència(CV): $Potencia 		Pes:$Pes 		Acceleració (0 a 100): $Acceleracio"
+           	echo "Model de l'any: $Model		Origen: $Origen"
+           	echo "    "
+           	echo "---------------------------------------------------------------------------------------------------"
+           	echo "    "
+        fi
+      fi
+    fi
+
+    let i++
+done
