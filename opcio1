@@ -1,1 +1,62 @@
- 
+ #!/bin/bash
+
+function MENU()
+{
+echo "
+--------------------------------------------------
+1 - Llistats de cotxes.
+--------------------------------------------------
+1 Mostrar llistat de cotxes (alfabètic per nom).
+2 Mostrar llistat de cotxes ordenat de menys a més consum 
+  (MPG - Miles Per Gallon).
+3 Mostrar llistat de cotxes ordenat de més acceleració 
+  a menys.
+4 Tornar."
+}
+
+function error()
+{
+echo "Opcio no valida"
+sleep 1.5
+clear
+}
+
+trobat=0
+while [ $trobat -eq 0 ]
+do
+
+bool=1
+clear
+MENU
+
+read opcio
+
+case $opcio in
+	1) 
+	bash opcio1-1 ;;
+	2) 
+	bash opcio1-2 ;;
+	3) 
+	bash opcio1-3 ;;
+	4) 
+	echo "4" 
+	trobat=1 ;;
+	*) error
+esac
+
+if [ $opcio -ge 1  ]
+then
+	if [ $opcio -le 3 ]
+	then
+		while [ $bool -eq 1 ] ; 
+		do
+ 		 read -t 3 -n 1
+ 		if [ $? = 0 ] ; then
+		clear ;
+		bool=0
+ 		fi
+		done
+	fi
+fi
+
+done
