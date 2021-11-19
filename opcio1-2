@@ -1,0 +1,42 @@
+ #!/bin/bash
+
+clear
+
+total=`cat cars.csv | wc -l`
+i=2
+
+while [ $i -le $total ]
+do
+    #Amb "sort -k -t:" demanem ordenar la columna numero 2, sepadada per ":" de les altres columnes, de forma que poguem agafar la informacio necesaria de cada cotxe de forma ordenada
+    #La columna 2 conte els MPG de cada cotxe
+    Cotxe=`sort -k2 -t: cars.csv | cut -d: -f1 | head -$i | tail +$i`
+    MPG=`sort -k2 -t: cars.csv | cut -d: -f2 | head -$i | tail +$i`
+    Num_Cilindres=`sort -k2 -t: cars.csv | cut -d: -f3 | head -$i | tail +$i`
+    Potencia=`sort -k2 -t: cars.csv | cut -d: -f5 | head -$i | tail +$i`
+    Cilindrada=`sort -k2 -t: cars.csv | cut -d: -f4 | head -$i | tail +$i`
+    Model=`sort -k2 -t: cars.csv | cut -d: -f8 | head -$i | tail +$i`
+    Pes=`sort -k2 -t: cars.csv | cut -d: -f6 | head -$i | tail +$i`
+    Origen=`sort -k2 -t: cars.csv | cut -d: -f9 | head -$i | tail +$i`
+    Acceleracio=`sort -k2 -t: cars.csv | cut -d: -f7 | head -$i | tail +$i`
+
+    #Filtre per que no es mostrin per pantalla les dos primeres linies del cars.csv, on hi ha el nom de cada columna i quin tipus de variable es
+    if [ "$Cotxe" != "Car" ]
+    then
+        if [ "$Cotxe" != "STRING" ]
+        then
+            #Filtre per imprimir per pantalla NOMES la informacio d'aquells cotxer que tinguin un MPG que no sigui 0
+            if [ $MPG != 0 ]
+            then
+           	echo "Cotxe: $Cotxe"
+           	echo "MPG: $MPG 			NºCilindres: $Num_Cilindres 		Cilindrada: $Cilindrada"
+           	echo "Potència(CV): $Potencia 		Pes:$Pes 		Acceleració (0 a 100): $Acceleracio"
+           	echo "Model de l'any: $Model		Origen: $Origen"
+           	echo "    "
+           	echo "---------------------------------------------------------------------------------------------------"
+           	echo "    "
+            fi
+        fi
+    fi
+
+    let i++
+done

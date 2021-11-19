@@ -1,0 +1,44 @@
+ #!/bin/bash
+
+clear
+
+total=`cat cars.csv | wc -l`
+i=2
+
+#Car:MPG:Cylinders:Displacement:Horsepower:Weight:Acceleration:Model:Origin
+#Volkswagen Super Beetle:26.0:4:97.00:46.00:1950.:21.0:73:Europe
+
+
+#bucle mostrar dades ordenades de cars.csv
+while [ $i -le $total ]
+do
+    #Amb "sort" demanem ordenar la columna numero 1 (la primera que troba), de forma que poguem agafar la informacio necesaria de cada cotxe de forma ordenada
+    #La primera clumna conte el nom de cada cotxe
+    Cotxe=`sort cars.csv | cut -d: -f1 | head -$i | tail +$i`
+    MPG=`sort cars.csv | cut -d: -f2 | head -$i | tail +$i`
+    Num_Cilindres=`sort cars.csv | cut -d: -f3 | head -$i | tail +$i`
+    Potencia=`sort cars.csv | cut -d: -f5 | head -$i | tail +$i`
+    Cilindrada=`sort cars.csv | cut -d: -f4 | head -$i | tail +$i`
+    Model=`sort cars.csv | cut -d: -f8 | head -$i | tail +$i`
+    Pes=`sort cars.csv | cut -d: -f6 | head -$i | tail +$i`
+    Origen=`sort cars.csv | cut -d: -f9 | head -$i | tail +$i`
+    Acceleracio=`sort cars.csv | cut -d: -f7 | head -$i | tail +$i`
+
+    #Filtre per que no es mostrin per pantalla les dos primeres linies del cars.csv, on hi ha el nom de cada columna i quin tipus de variable es
+    if [ "$Cotxe" != "Car" ]
+    then
+        if [ "$Cotxe" != "STRING" ]
+        then
+            echo "Cotxe: $Cotxe"
+            echo "MPG: $MPG 			NºCilindres: $Num_Cilindres 		Cilindrada: $Cilindrada"
+            echo "Potència(CV): $Potencia 		Pes:$Pes 		Acceleració (0 a 100): $Acceleracio"
+            echo "Model de l'any: $Model		Origen: $Origen"
+            echo "    "
+            echo "---------------------------------------------------------------------------------------------------"
+            echo "    "
+        fi
+    fi
+
+    let i++
+done
+ 
